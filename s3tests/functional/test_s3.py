@@ -932,6 +932,7 @@ def _set_get_metadata(metadata, bucket=None):
     return key2.get_metadata('meta1')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata write/re-read')
@@ -941,6 +942,7 @@ def test_object_set_get_metadata_none_to_good():
     eq(got, 'mymeta')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata write/re-read')
@@ -950,6 +952,7 @@ def test_object_set_get_metadata_none_to_empty():
     eq(got, '')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata write/re-write')
@@ -962,6 +965,7 @@ def test_object_set_get_metadata_overwrite_to_good():
     eq(got, 'newmeta')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata write/re-write')
@@ -974,6 +978,7 @@ def test_object_set_get_metadata_overwrite_to_empty():
     eq(got, '')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata write/re-write')
@@ -989,6 +994,7 @@ def test_object_set_get_unicode_metadata():
     eq(got, u"Hello World\xe9")
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata write/re-write')
@@ -1017,6 +1023,7 @@ def _set_get_metadata_unreadable(metadata, bucket=None):
     return got
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata write')
@@ -1028,6 +1035,7 @@ def test_object_set_get_metadata_empty_to_unreadable_prefix():
     eq(got, [(metadata, 'utf-8')])
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata write')
@@ -1039,6 +1047,7 @@ def test_object_set_get_metadata_empty_to_unreadable_suffix():
     eq(got, [(metadata, 'utf-8')])
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata write')
@@ -1049,6 +1058,7 @@ def test_object_set_get_metadata_empty_to_unreadable_infix():
     eq(got, [(metadata, 'utf-8')])
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata re-write')
@@ -1063,6 +1073,7 @@ def test_object_set_get_metadata_overwrite_to_unreadable_prefix():
     eq(got2, [(metadata2, 'utf-8')])
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata re-write')
@@ -1077,6 +1088,7 @@ def test_object_set_get_metadata_overwrite_to_unreadable_suffix():
     eq(got2, [(metadata2, 'utf-8')])
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.metadata')
 @attr(method='put')
 @attr(operation='metadata re-write')
@@ -1090,6 +1102,7 @@ def test_object_set_get_metadata_overwrite_to_unreadable_infix():
     eq(got2, [(metadata2, 'utf-8')])
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='data re-write')
@@ -1153,6 +1166,7 @@ def test_post_object_anonymous_request():
 	eq(got, 'bar')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1190,6 +1204,7 @@ def test_post_object_authenticated_request():
 	got = key.get_contents_as_string()
 	eq(got, 'bar')
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request, bad access key')
@@ -1263,6 +1278,7 @@ def test_post_object_set_invalid_success_code():
 	eq(r.content,'')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1303,6 +1319,7 @@ def test_post_object_upload_larger_than_chunk():
 	eq(got, foo_string)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1341,6 +1358,7 @@ def test_post_object_set_key_from_filename():
 	eq(got, 'bar')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1376,6 +1394,7 @@ def test_post_object_ignored_header():
 	eq(r.status_code, 204)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1411,6 +1430,7 @@ def test_post_object_case_insensitive_condition_fields():
 	eq(r.status_code, 204)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1449,6 +1469,7 @@ def test_post_object_escaped_field_values():
 	eq(got, 'bar')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1493,6 +1514,7 @@ def test_post_object_success_redirect_action():
 	                                                             key = key.name, etag = key.etag.strip('"')))
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1528,6 +1550,7 @@ def test_post_object_invalid_signature():
 	eq(r.status_code, 403)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1563,6 +1586,7 @@ def test_post_object_invalid_access_key():
 	eq(r.status_code, 403)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1598,6 +1622,7 @@ def test_post_object_invalid_date_format():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1632,6 +1657,7 @@ def test_post_object_no_key_specified():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1667,6 +1693,7 @@ def test_post_object_missing_signature():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1701,6 +1728,7 @@ def test_post_object_missing_policy_condition():
 	eq(r.status_code, 403)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1739,6 +1767,7 @@ def test_post_object_user_specified_header():
 	eq(key.get_metadata('foo'), 'barclamp')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1775,6 +1804,7 @@ def test_post_object_request_missing_policy_specified_field():
 	eq(r.status_code, 403)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1810,6 +1840,7 @@ def test_post_object_condition_is_case_sensitive():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1845,6 +1876,7 @@ def test_post_object_expires_is_case_sensitive():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1880,6 +1912,7 @@ def test_post_object_expired_policy():
 	eq(r.status_code, 403)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1916,6 +1949,7 @@ def test_post_object_invalid_request_field_value():
 	eq(r.status_code, 403)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1951,6 +1985,7 @@ def test_post_object_missing_expires_condition():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -1979,6 +2014,7 @@ def test_post_object_missing_conditions_list():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -2014,6 +2050,7 @@ def test_post_object_upload_size_limit_exceeded():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -2049,6 +2086,7 @@ def test_post_object_missing_content_length_argument():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -2084,6 +2122,7 @@ def test_post_object_invalid_content_length_argument():
 	eq(r.status_code, 400)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='post')
 @attr(operation='authenticated browser based upload via POST request')
@@ -2124,6 +2163,7 @@ def test_post_object_upload_size_below_minimum():
 @attr(operation='data re-write w/ If-Match: the latest ETag')
 @attr(assertion='replaces previous data and metadata')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_put_object_ifmatch_good():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -2141,6 +2181,7 @@ def test_put_object_ifmatch_good():
 @attr(operation='data re-write w/ If-Match: outdated ETag')
 @attr(assertion='fails 412')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_put_object_ifmatch_failed():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -2163,6 +2204,7 @@ def test_put_object_ifmatch_failed():
 @attr(operation='overwrite existing object w/ If-Match: *')
 @attr(assertion='replaces previous data and metadata')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_put_object_ifmatch_overwrite_existed_good():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -2180,6 +2222,7 @@ def test_put_object_ifmatch_overwrite_existed_good():
 @attr(operation='overwrite non-existing object w/ If-Match: *')
 @attr(assertion='fails 412')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_put_object_ifmatch_nonexisted_failed():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -2198,6 +2241,7 @@ def test_put_object_ifmatch_nonexisted_failed():
 @attr(operation='overwrite existing object w/ If-None-Match: outdated ETag')
 @attr(assertion='replaces previous data and metadata')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_put_object_ifnonmatch_good():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -2215,6 +2259,7 @@ def test_put_object_ifnonmatch_good():
 @attr(operation='overwrite existing object w/ If-None-Match: the latest ETag')
 @attr(assertion='fails 412')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_put_object_ifnonmatch_failed():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -2236,6 +2281,7 @@ def test_put_object_ifnonmatch_failed():
 @attr(operation='overwrite non-existing object w/ If-None-Match: *')
 @attr(assertion='succeeds')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_put_object_ifnonmatch_nonexisted_good():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -2249,6 +2295,7 @@ def test_put_object_ifnonmatch_nonexisted_good():
 @attr(operation='overwrite existing object w/ If-None-Match: *')
 @attr(assertion='fails 412')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_put_object_ifnonmatch_overwrite_existed_failed():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -2425,6 +2472,7 @@ def test_bucket_head():
 # This test relies on Ceph extensions.
 # http://tracker.ceph.com/issues/2313
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='head')
 @attr(operation='read bucket extended information')
@@ -2482,6 +2530,7 @@ def test_object_raw_authenticated():
     eq(res.reason, 'OK')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='get')
 @attr(operation='authenticated on private bucket/private object with modified response headers')
@@ -2629,6 +2678,7 @@ def check_bad_bucket_name(name):
 # AWS does not enforce all documented bucket restrictions.
 # http://docs.amazonwebservices.com/AmazonS3/2006-03-01/dev/index.html?BucketRestrictions.html
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 # Breaks DNS with SubdomainCallingFormat
 @attr('fails_with_subdomain')
 @attr(resource='bucket')
@@ -2795,6 +2845,7 @@ def test_bucket_list_long_name():
 # AWS does not enforce all documented bucket restrictions.
 # http://docs.amazonwebservices.com/AmazonS3/2006-03-01/dev/index.html?BucketRestrictions.html
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='put')
 @attr(operation='create w/ip address for name')
@@ -2919,6 +2970,7 @@ def test_bucket_delete_nonowner():
     check_access_denied(s3.alt.delete_bucket, bucket.name)
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='get')
 @attr(operation='default acl')
@@ -2945,6 +2997,7 @@ def test_bucket_acl_default():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='get')
 @attr(operation='public-read acl')
@@ -2976,6 +3029,7 @@ def test_bucket_acl_canned_during_create():
             ],
         )
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='put')
 @attr(operation='acl: public-read,private')
@@ -3027,6 +3081,7 @@ def test_bucket_acl_canned():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket.acls')
 @attr(method='put')
 @attr(operation='acl: public-read-write')
@@ -3067,6 +3122,7 @@ def test_bucket_acl_canned_publicreadwrite():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='put')
 @attr(operation='acl: authenticated-read')
@@ -3099,6 +3155,7 @@ def test_bucket_acl_canned_authenticatedread():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.acls')
 @attr(method='get')
 @attr(operation='default acl')
@@ -3124,6 +3181,7 @@ def test_object_acl_default():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.acls')
 @attr(method='put')
 @attr(operation='acl public-read')
@@ -3157,6 +3215,7 @@ def test_object_acl_canned_during_create():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.acls')
 @attr(method='put')
 @attr(operation='acl public-read,private')
@@ -3210,6 +3269,7 @@ def test_object_acl_canned():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='acl public-read-write')
@@ -3252,6 +3312,7 @@ def test_object_acl_canned_publicreadwrite():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.acls')
 @attr(method='put')
 @attr(operation='acl authenticated-read')
@@ -3286,6 +3347,7 @@ def test_object_acl_canned_authenticatedread():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.acls')
 @attr(method='put')
 @attr(operation='acl bucket-owner-read')
@@ -3330,6 +3392,7 @@ def test_object_acl_canned_bucketownerread():
     bucket.delete()
 
 
+@attr('fails_on_leofs')
 @attr(resource='object.acls')
 @attr(method='put')
 @attr(operation='acl bucket-owner-read')
@@ -3373,6 +3436,7 @@ def test_object_acl_canned_bucketownerfullcontrol():
     key.delete()
     bucket.delete()
 
+@attr('fails_on_leofs')
 @attr(resource='object.acls')
 @attr(method='put')
 @attr(operation='set write-acp')
@@ -3439,6 +3503,7 @@ def _build_bucket_acl_xml(permission, bucket=None):
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket.acls')
 @attr(method='ACLs')
 @attr(operation='set acl FULL_CONTROL (xml)')
@@ -3447,6 +3512,7 @@ def test_bucket_acl_xml_fullcontrol():
     _build_bucket_acl_xml('FULL_CONTROL')
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket.acls')
 @attr(method='ACLs')
 @attr(operation='set acl WRITE (xml)')
@@ -3455,6 +3521,7 @@ def test_bucket_acl_xml_write():
     _build_bucket_acl_xml('WRITE')
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket.acls')
 @attr(method='ACLs')
 @attr(operation='set acl WRITE_ACP (xml)')
@@ -3463,6 +3530,7 @@ def test_bucket_acl_xml_writeacp():
     _build_bucket_acl_xml('WRITE_ACP')
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket.acls')
 @attr(method='ACLs')
 @attr(operation='set acl READ (xml)')
@@ -3471,6 +3539,7 @@ def test_bucket_acl_xml_read():
     _build_bucket_acl_xml('READ')
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket.acls')
 @attr(method='ACLs')
 @attr(operation='set acl READ_ACP (xml)')
@@ -3509,6 +3578,7 @@ def _build_object_acl_xml(permission):
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set acl FULL_CONTROL (xml)')
@@ -3517,6 +3587,7 @@ def test_object_acl_xml():
     _build_object_acl_xml('FULL_CONTROL')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set acl WRITE (xml)')
@@ -3525,6 +3596,7 @@ def test_object_acl_xml_write():
     _build_object_acl_xml('WRITE')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set acl WRITE_ACP (xml)')
@@ -3533,6 +3605,7 @@ def test_object_acl_xml_writeacp():
     _build_object_acl_xml('WRITE_ACP')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set acl READ (xml)')
@@ -3541,6 +3614,7 @@ def test_object_acl_xml_read():
     _build_object_acl_xml('READ')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set acl READ_ACP (xml)')
@@ -3649,6 +3723,7 @@ def _check_bucket_acl_grant_cant_writeacp(bucket):
     check_access_denied(bucket2.set_acl, 'public-read')
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='set acl w/userid FULL_CONTROL')
@@ -3672,6 +3747,7 @@ def test_bucket_acl_grant_userid_fullcontrol():
     eq(policy.owner.display_name, config.main.display_name)
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='set acl w/userid READ')
@@ -3689,6 +3765,7 @@ def test_bucket_acl_grant_userid_read():
     _check_bucket_acl_grant_cant_writeacp(bucket)
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='set acl w/userid READ_ACP')
@@ -3706,6 +3783,7 @@ def test_bucket_acl_grant_userid_readacp():
     #_check_bucket_acl_grant_cant_writeacp_can_readacp(bucket)
     _check_bucket_acl_grant_cant_writeacp(bucket)
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='set acl w/userid WRITE')
@@ -3723,6 +3801,7 @@ def test_bucket_acl_grant_userid_write():
     _check_bucket_acl_grant_cant_writeacp(bucket)
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='set acl w/userid WRITE_ACP')
@@ -3740,6 +3819,7 @@ def test_bucket_acl_grant_userid_writeacp():
     _check_bucket_acl_grant_can_writeacp(bucket)
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='set acl w/invalid userid')
@@ -3757,6 +3837,7 @@ def test_bucket_acl_grant_nonexist_user():
     eq(e.error_code, 'InvalidArgument')
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='revoke all ACLs')
@@ -3805,6 +3886,7 @@ def _get_acl_header(user=None, perms=None):
 
     return headers
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='PUT')
 @attr(operation='add all grants to user through headers')
@@ -3864,6 +3946,7 @@ def test_object_header_acl_grants():
         )
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='PUT')
 @attr(operation='add all grants to user through headers')
@@ -3929,6 +4012,7 @@ def test_bucket_header_acl_grants():
 # This test will fail on DH Objects. DHO allows multiple users with one account, which
 # would violate the uniqueness requirement of a user's email. As such, DHO users are
 # created without an email.
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='add second FULL_CONTROL user')
@@ -3968,6 +4052,7 @@ def test_bucket_acl_grant_email():
     key.set_contents_from_string('bar')
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='add acl for nonexistent user')
@@ -3983,6 +4068,7 @@ def test_bucket_acl_grant_email_notexist():
     eq(e.error_code, 'UnresolvableGrantByEmailAddress')
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='ACLs')
 @attr(operation='revoke all ACLs')
@@ -3999,6 +4085,7 @@ def test_bucket_acl_revoke_all():
 
 # TODO rgw log_bucket.set_as_logging_target() gives 403 Forbidden
 # http://tracker.newdream.net/issues/984
+@attr('fails_on_leofs')
 @attr(resource='bucket.log')
 @attr(method='put')
 @attr(operation='set/enable/disable logging target')
@@ -4043,6 +4130,7 @@ def get_bucket_key_names(bucket):
     return frozenset(k.name for k in bucket.list())
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set bucket/object acls: private/private')
@@ -4065,6 +4153,7 @@ def test_access_bucket_private_object_private():
     check_access_denied(obj.new.set_contents_from_string, 'newcontent')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set bucket/object acls: private/public-read')
@@ -4080,6 +4169,7 @@ def test_access_bucket_private_object_publicread():
     check_access_denied(obj.new.set_contents_from_string, 'newcontent')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set bucket/object acls: private/public-read/write')
@@ -4096,6 +4186,7 @@ def test_access_bucket_private_object_publicreadwrite():
     check_access_denied(obj.new.set_contents_from_string, 'newcontent')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set bucket/object acls: public-read/private')
@@ -4111,6 +4202,7 @@ def test_access_bucket_publicread_object_private():
     check_access_denied(obj.new.set_contents_from_string, 'newcontent')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set bucket/object acls: public-read/public-read')
@@ -4126,6 +4218,7 @@ def test_access_bucket_publicread_object_publicread():
     check_access_denied(obj.new.set_contents_from_string, 'newcontent')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set bucket/object acls: public-read/public-read-write')
@@ -4142,6 +4235,7 @@ def test_access_bucket_publicread_object_publicreadwrite():
     check_access_denied(obj.new.set_contents_from_string, 'newcontent')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set bucket/object acls: public-read-write/private')
@@ -4157,6 +4251,7 @@ def test_access_bucket_publicreadwrite_object_private():
     obj.new.set_contents_from_string('newcontent')
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set bucket/object acls: public-read-write/public-read')
@@ -4171,6 +4266,7 @@ def test_access_bucket_publicreadwrite_object_publicread():
     eq(get_bucket_key_names(obj.bucket2), frozenset(['foo', 'bar']))
     obj.new.set_contents_from_string('newcontent')
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='ACLs')
 @attr(operation='set bucket/object acls: public-read-write/public-read-write')
@@ -4185,6 +4281,7 @@ def test_access_bucket_publicreadwrite_object_publicreadwrite():
     eq(get_bucket_key_names(obj.bucket2), frozenset(['foo', 'bar']))
     obj.new.set_contents_from_string('newcontent')
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='set object acls')
@@ -4196,6 +4293,7 @@ def test_object_set_valid_acl():
     key.set_contents_from_string('bar')
     key.set_xml_acl(XML_1)
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='set object acls')
@@ -4244,6 +4342,7 @@ def _create_connection_bad_auth(aws_access_key_id='badauth'):
 @attr(operation='list all buckets (anonymous)')
 @attr(assertion='succeeds')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_list_buckets_anonymous():
     # Get a connection with bad authorization, then change it to be our new Anonymous auth mechanism,
     # emulating standard HTTP access.
@@ -4402,6 +4501,7 @@ def test_object_copy_to_itself():
     eq(e.reason, 'Bad Request')
     eq(e.error_code, 'InvalidRequest')
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='modify object metadata by copying')
@@ -4447,6 +4547,7 @@ def test_object_copy_not_owned_bucket():
     except AttributeError:
         pass
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='copy a non-owned object in a non-owned bucket, but with perms')
@@ -4480,6 +4581,7 @@ def test_object_copy_canned_acl():
     eq(res.status, 200)
     eq(res.reason, 'OK')
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='copy object and retain metadata')
@@ -4499,6 +4601,7 @@ def test_object_copy_retaining_metadata():
     eq(key2.metadata, metadata)
     eq(key2.content_type, content_type)
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='copy object and replace metadata')
@@ -4859,6 +4962,7 @@ def _test_bucket_acls_changes_persistent(bucket):
     for p in perms:
         _build_bucket_acl_xml(p, bucket)
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='put')
 @attr(operation='acl set')
@@ -4867,6 +4971,7 @@ def test_bucket_acls_changes_persistent():
     bucket = get_new_bucket()
     _test_bucket_acls_changes_persistent(bucket);
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='put')
 @attr(operation='repeated acl set')
@@ -4876,6 +4981,7 @@ def test_stress_bucket_acls_changes():
     for i in xrange(10):
         _test_bucket_acls_changes_persistent(bucket);
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='put')
 @attr(operation='set cors')
@@ -4919,6 +5025,7 @@ def _cors_request_and_check(func, url, headers, expect_status, expect_allow_orig
 
     
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='get')
 @attr(operation='check cors response when origin header set')
@@ -5264,6 +5371,7 @@ def _test_atomic_conditional_write(file_size):
 @attr(operation='write atomicity')
 @attr(assertion='1MB successful')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_atomic_conditional_write_1mb():
     _test_atomic_conditional_write(1024*1024)
 
@@ -5306,6 +5414,7 @@ def _test_atomic_dual_conditional_write(file_size):
 @attr(operation='write one or the other')
 @attr(assertion='1MB successful')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_atomic_dual_conditional_write_1mb():
     _test_atomic_dual_conditional_write(1024*1024)
 
@@ -5314,6 +5423,7 @@ def test_atomic_dual_conditional_write_1mb():
 @attr(operation='write file in deleted bucket')
 @attr(assertion='fail 404')
 @attr('fails_on_aws')
+@attr('fails_on_leofs')
 def test_atomic_write_bucket_gone():
     bucket = get_new_bucket()
 
@@ -5413,6 +5523,7 @@ def send_raw_http_request(conn, method, bucket_name, key_name, follow_redirects 
     h.follow_redirects = follow_redirects
     return h.request(url, method)
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='get')
 @attr(operation='create on one region, access in another')
@@ -5435,6 +5546,7 @@ def test_region_bucket_create_secondary_access_remove_master():
 
         conn.delete_bucket(bucket)
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='get')
 @attr(operation='create on one region, access in another')
@@ -5469,6 +5581,7 @@ def test_region_bucket_create_master_access_remove_secondary():
 
 
 @attr(resource='object')
+@attr('fails_on_leofs')
 @attr(method='copy')
 @attr(operation='copy object between regions, verify')
 @attr(assertion='can read object')
@@ -5581,6 +5694,7 @@ def check_configure_versioning_retry(bucket, status, expected_string):
     eq(expected_string, read_status)
 
 
+@attr('fails_on_leofs')
 @attr(resource='bucket')
 @attr(method='create')
 @attr(operation='create versioned bucket')
@@ -5720,6 +5834,7 @@ def _do_test_create_remove_versions_and_head(bucket, objname, num_versions, num_
 
     _do_remove_versions(bucket, objname, remove_start_idx, idx_inc, head_rm_ratio, k, c)
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='create')
 @attr(operation='create and remove versioned object')
@@ -5737,6 +5852,7 @@ def test_versioning_obj_create_read_remove():
     _do_test_create_remove_versions(bucket, objname, num_vers, 4, -1)
     _do_test_create_remove_versions(bucket, objname, num_vers, 3, 3)
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='create')
 @attr(operation='create and remove versioned object and head')
@@ -5788,6 +5904,7 @@ def overwrite_suspended_versioning_obj(bucket, objname, k, c, content):
 
     check_obj_versions(bucket, objname, k, c)
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='create')
 @attr(operation='suspend versioned bucket')
@@ -5824,6 +5941,7 @@ def test_versioning_obj_suspend_versions():
     eq(len(k), 0)
     eq(len(k), len(c))
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='create')
 @attr(operation='suspend versioned bucket')
@@ -5857,6 +5975,7 @@ def test_versioning_obj_suspend_versions_simple():
     eq(len(k), 0)
     eq(len(k), len(c))
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='remove')
 @attr(operation='create and remove versions')
@@ -5879,6 +5998,7 @@ def test_versioning_obj_create_versions_remove_all():
     eq(len(k), 0)
     eq(len(k), len(c))
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='multipart')
 @attr(operation='create and test multipart object')
@@ -5912,6 +6032,7 @@ def test_versioning_obj_create_overwrite_multipart():
 
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='multipart')
 @attr(operation='list versioned objects')
@@ -5949,6 +6070,7 @@ def test_versioning_obj_list_marker():
             eq(key1.version_id, key2.version_id)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='multipart')
 @attr(operation='create and test versioned object copying')
@@ -5989,6 +6111,7 @@ def _count_bucket_versioned_objs(bucket):
     return len(k)
 
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='delete')
 @attr(operation='delete multiple versions')
@@ -6025,6 +6148,7 @@ def test_versioning_multi_object_delete():
 
         eq(_count_bucket_versioned_objs(bucket), 0)
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='delete')
 @attr(operation='delete multiple versions')
@@ -6071,6 +6195,7 @@ def test_versioning_multi_object_delete_with_marker():
 
         eq(_count_bucket_versioned_objs(bucket), 0)
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='delete')
 @attr(operation='multi delete create marker')
@@ -6102,6 +6227,7 @@ def test_versioning_multi_object_delete_with_marker_create():
             eq(o.name, keyname)
             eq(o.version_id, delete_markers[0].delete_marker_version_id)
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='change acl on an object version changes specific version')
@@ -6200,6 +6326,7 @@ def _do_wait_completion(t):
     for thr in t:
         thr.join()
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='concurrent creation of objects, concurrent removal')
@@ -6227,6 +6354,7 @@ def test_versioned_concurrent_object_create_concurrent_remove():
         eq(_count_bucket_versioned_objs(bucket), 0)
         eq(len(bucket.get_all_keys()), 0)
 
+@attr('fails_on_leofs')
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='concurrent creation and removal of objects')
