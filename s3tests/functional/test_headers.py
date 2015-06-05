@@ -166,6 +166,7 @@ def _setup_bad_object(headers=None, remove=None):
 @attr(method='put')
 @attr(operation='create w/invalid MD5')
 @attr(assertion='fails 400')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_md5_invalid():
     key = _setup_bad_object({'Content-MD5':'AWS HAHAHA'})
@@ -180,6 +181,7 @@ def test_object_create_bad_md5_invalid():
 @attr(method='put')
 @attr(operation='create w/invalid MD5')
 @attr(assertion='fails 400')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_md5_invalid():
     key = _setup_bad_object({'Content-MD5':'YWJyYWNhZGFicmE='})
@@ -194,6 +196,7 @@ def test_object_create_bad_md5_invalid():
 @attr(method='put')
 @attr(operation='create w/mismatched MD5')
 @attr(assertion='fails 400')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_md5_bad():
     key = _setup_bad_object({'Content-MD5':'rL0Y20zC+Fzt72VPzMSk2A=='})
@@ -208,6 +211,7 @@ def test_object_create_bad_md5_bad():
 @attr(method='put')
 @attr(operation='create w/empty MD5')
 @attr(assertion='fails 400')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_md5_empty():
     key = _setup_bad_object({'Content-MD5': ''})
@@ -222,6 +226,7 @@ def test_object_create_bad_md5_empty():
 @attr(method='put')
 @attr(operation='create w/non-graphics in MD5')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_md5_unreadable():
     key = _setup_bad_object({'Content-MD5': '\x07'})
@@ -261,6 +266,7 @@ def test_object_create_bad_expect_mismatch():
 @attr(method='put')
 @attr(operation='create w/empty expect')
 @attr(assertion='succeeds ... should it?')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_expect_empty():
     key = _setup_bad_object({'Expect': ''})
@@ -282,6 +288,7 @@ def test_object_create_bad_expect_none():
 @attr(method='put')
 @attr(operation='create w/non-graphic expect')
 @attr(assertion='garbage, but S3 succeeds!')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 @attr('fails_on_rgw')
 def test_object_create_bad_expect_unreadable():
@@ -295,6 +302,7 @@ def test_object_create_bad_expect_unreadable():
 @attr(assertion='fails 400')
 @nose.with_setup(teardown=_clear_custom_headers)
 @attr('fails_on_rgw')
+@attr('fails_on_leofs')
 def test_object_create_bad_contentlength_empty():
     key = _setup_bad_object({'Content-Length': ''})
 
@@ -322,6 +330,7 @@ def test_object_create_bad_contentlength_negative():
 @attr(method='put')
 @attr(operation='create w/no content length')
 @attr(assertion='fails 411')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_contentlength_none():
     key = _setup_bad_object(remove=('Content-Length',))
@@ -336,6 +345,7 @@ def test_object_create_bad_contentlength_none():
 @attr(operation='create w/non-graphic content length')
 @attr(assertion='fails 400')
 @attr('fails_on_mod_proxy_fcgi')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_contentlength_unreadable():
     key = _setup_bad_object({'Content-Length': '\x07'})
@@ -352,6 +362,7 @@ def test_object_create_bad_contentlength_unreadable():
 @attr(assertion='fails 400')
 @nose.with_setup(teardown=_clear_custom_headers)
 @attr('fails_on_rgw')
+@attr('fails_on_leofs')
 def test_object_create_bad_contentlength_mismatch_above():
     content = 'bar'
     length = len(content) + 1
@@ -373,6 +384,7 @@ def test_object_create_bad_contentlength_mismatch_above():
 @attr(method='put')
 @attr(operation='create w/content length too short')
 @attr(assertion='fails 400')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_contentlength_mismatch_below():
     content = 'bar'
@@ -422,6 +434,7 @@ def test_object_create_bad_contenttype_none():
 @attr(assertion='fails 403')
 @nose.with_setup(teardown=_clear_custom_headers)
 @attr('fails_on_rgw')
+@attr('fails_on_leofs')
 def test_object_create_bad_contenttype_unreadable():
     key = _setup_bad_object({'Content-Type': '\x08'})
 
@@ -466,6 +479,7 @@ def test_object_create_bad_ua_none():
 @attr(method='put')
 @attr(operation='create w/invalid authorization')
 @attr(assertion='fails 400')
+@attr('fails_on_leofs')
 def test_object_create_bad_authorization_invalid():
     key = _setup_bad_object({'Authorization': 'AWS HAHAHA'})
 
@@ -538,6 +552,7 @@ def test_object_create_bad_authorization_incorrect():
 @attr(method='put')
 @attr(operation='create w/invalid date')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_date_invalid():
     key = _setup_bad_object({'Date': 'Bad Date'})
@@ -552,6 +567,7 @@ def test_object_create_bad_date_invalid():
 @attr(method='put')
 @attr(operation='create w/empty date')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_date_empty():
     key = _setup_bad_object({'Date': ''})
@@ -566,6 +582,7 @@ def test_object_create_bad_date_empty():
 @attr(method='put')
 @attr(operation='create w/non-graphic date')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_date_unreadable():
     key = _setup_bad_object({'Date': '\x07'})
@@ -594,6 +611,7 @@ def test_object_create_bad_date_none():
 @attr(method='put')
 @attr(operation='create w/date in past')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_date_before_today():
     key = _setup_bad_object({'Date': 'Tue, 07 Jul 2010 21:53:04 GMT'})
@@ -608,6 +626,7 @@ def test_object_create_bad_date_before_today():
 @attr(method='put')
 @attr(operation='create w/date in future')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_date_after_today():
     key = _setup_bad_object({'Date': 'Tue, 07 Jul 2030 21:53:04 GMT'})
@@ -622,6 +641,7 @@ def test_object_create_bad_date_after_today():
 @attr(method='put')
 @attr(operation='create w/date before epoch')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_date_before_epoch():
     key = _setup_bad_object({'Date': 'Tue, 07 Jul 1950 21:53:04 GMT'})
@@ -636,6 +656,7 @@ def test_object_create_bad_date_before_epoch():
 @attr(method='put')
 @attr(operation='create w/date after 9999')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_object_create_bad_date_after_end():
     key = _setup_bad_object({'Date': 'Tue, 07 Jul 9999 21:53:04 GMT'})
@@ -736,6 +757,7 @@ def _create_new_connection():
 @attr(method='put')
 @attr(operation='create w/empty content length')
 @attr(assertion='fails 400')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 @attr('fails_on_rgw')
 def test_bucket_create_bad_contentlength_empty():
@@ -752,6 +774,7 @@ def test_bucket_create_bad_contentlength_empty():
 @attr(operation='create w/negative content length')
 @attr(assertion='fails 400')
 @attr('fails_on_mod_proxy_fcgi')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_bucket_create_bad_contentlength_negative():
     _add_custom_headers({'Content-Length': -1})
@@ -775,6 +798,7 @@ def test_bucket_create_bad_contentlength_none():
 @attr(operation='create w/non-graphic content length')
 @attr(assertion='fails 400')
 @attr('fails_on_mod_proxy_fcgi')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_bucket_create_bad_contentlength_unreadable():
     _add_custom_headers({'Content-Length': '\x07'})
@@ -819,6 +843,7 @@ def test_bucket_create_bad_ua_none():
 @attr(method='put')
 @attr(operation='create w/invalid authorization')
 @attr(assertion='fails 400')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_bucket_create_bad_authorization_invalid():
     _add_custom_headers({'Authorization': 'AWS HAHAHA'})
@@ -877,6 +902,7 @@ def test_bucket_create_bad_authorization_none():
 @attr(method='put')
 @attr(operation='create w/invalid date')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_bucket_create_bad_date_invalid():
     _add_custom_headers({'Date': 'Bad Date'})
@@ -891,6 +917,7 @@ def test_bucket_create_bad_date_invalid():
 @attr(method='put')
 @attr(operation='create w/empty date')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_bucket_create_bad_date_empty():
     _add_custom_headers({'Date': ''})
@@ -905,6 +932,7 @@ def test_bucket_create_bad_date_empty():
 @attr(method='put')
 @attr(operation='create w/non-graphic date')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_bucket_create_bad_date_unreadable():
     _add_custom_headers({'Date': '\x07'})
@@ -933,6 +961,7 @@ def test_bucket_create_bad_date_none():
 @attr(method='put')
 @attr(operation='create w/date in past')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_bucket_create_bad_date_before_today():
     _add_custom_headers({'Date': 'Tue, 07 Jul 2010 21:53:04 GMT'})
@@ -947,6 +976,7 @@ def test_bucket_create_bad_date_before_today():
 @attr(method='put')
 @attr(operation='create w/date in future')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_bucket_create_bad_date_after_today():
     _add_custom_headers({'Date': 'Tue, 07 Jul 2030 21:53:04 GMT'})
@@ -960,6 +990,7 @@ def test_bucket_create_bad_date_after_today():
 @attr(resource='bucket')
 @attr(method='put')
 @attr(operation='create w/date before epoch')
+@attr('fails_on_leofs')
 @attr(assertion='fails 403')
 @nose.with_setup(teardown=_clear_custom_headers)
 def test_bucket_create_bad_date_before_epoch():

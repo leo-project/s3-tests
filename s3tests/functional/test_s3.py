@@ -213,6 +213,7 @@ def validate_bucket_list(bucket, prefix, delimiter, marker, max_keys,
 @attr(method='get')
 @attr(operation='list')
 @attr(assertion='prefixes in multi-component object names')
+@attr('fails_on_leofs')
 def test_bucket_list_delimiter_prefix():
     bucket = _create_keys(keys=['asdf', 'boo/bar', 'boo/baz/xyzzy', 'cquux/thud', 'cquux/bla'])
 
@@ -238,6 +239,7 @@ def test_bucket_list_delimiter_prefix():
 @attr(method='get')
 @attr(operation='list')
 @attr(assertion='non-slash delimiter characters')
+@attr('fails_on_leofs')
 def test_bucket_list_delimiter_alt():
     bucket = _create_keys(keys=['bar', 'baz', 'cab', 'foo'])
 
@@ -345,6 +347,7 @@ def test_bucket_list_prefix_basic():
 @attr(method='get')
 @attr(operation='list under prefix')
 @attr(assertion='prefixes w/o delimiters')
+@attr('fails_on_leofs')
 def test_bucket_list_prefix_alt():
     bucket = _create_keys(keys=['bar', 'baz', 'foo'])
 
@@ -361,6 +364,7 @@ def test_bucket_list_prefix_alt():
 @attr(method='get')
 @attr(operation='list under prefix')
 @attr(assertion='empty prefix returns everything')
+@attr('fails_on_leofs')
 def test_bucket_list_prefix_empty():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket = _create_keys(keys=key_names)
@@ -378,6 +382,7 @@ def test_bucket_list_prefix_empty():
 @attr(method='get')
 @attr(operation='list under prefix')
 @attr(assertion='unspecified prefix returns everything')
+@attr('fails_on_leofs')
 def test_bucket_list_prefix_none():
     key_names = ['foo/bar', 'foo/baz', 'quux']
     bucket = _create_keys(keys=key_names)
@@ -445,6 +450,7 @@ def test_bucket_list_prefix_delimiter_basic():
 @attr(method='get')
 @attr(operation='list under prefix w/delimiter')
 @attr(assertion='non-slash delimiters')
+@attr('fails_on_leofs')
 def test_bucket_list_prefix_delimiter_alt():
     bucket = _create_keys(keys=['bar', 'bazar', 'cab', 'foo'])
 
@@ -478,6 +484,7 @@ def test_bucket_list_prefix_delimiter_prefix_not_exist():
 @attr(method='get')
 @attr(operation='list under prefix w/delimiter')
 @attr(assertion='over-ridden slash ceases to be a delimiter')
+@attr('fails_on_leofs')
 def test_bucket_list_prefix_delimiter_delimiter_not_exist():
     bucket = _create_keys(keys=['b/a/c', 'b/a/g', 'b/a/r', 'g'])
 
@@ -527,6 +534,7 @@ def test_bucket_list_maxkeys_one():
 @attr(method='get')
 @attr(operation='list all keys')
 @attr(assertion='pagination w/max_keys=0')
+@attr('fails_on_leofs')
 def test_bucket_list_maxkeys_zero():
     bucket = _create_keys(keys=['bar', 'baz', 'foo', 'quxx'])
 
@@ -611,6 +619,7 @@ def test_bucket_list_marker_empty():
 @attr(method='get')
 @attr(operation='list all keys')
 @attr(assertion='non-printing marker')
+@attr('fails_on_leofs')
 def test_bucket_list_marker_unreadable():
     key_names = ['bar', 'baz', 'foo', 'quxx']
     bucket = _create_keys(keys=key_names)
@@ -626,6 +635,7 @@ def test_bucket_list_marker_unreadable():
 @attr(method='get')
 @attr(operation='list all keys')
 @attr(assertion='marker not-in-list')
+@attr('fails_on_leofs')
 def test_bucket_list_marker_not_in_list():
     bucket = _create_keys(keys=['bar', 'baz', 'foo', 'quxx'])
 
@@ -639,6 +649,7 @@ def test_bucket_list_marker_not_in_list():
 @attr(method='get')
 @attr(operation='list all keys')
 @attr(assertion='marker after list')
+@attr('fails_on_leofs')
 def test_bucket_list_marker_after_list():
     bucket = _create_keys(keys=['bar', 'baz', 'foo', 'quxx'])
 
@@ -652,6 +663,7 @@ def test_bucket_list_marker_after_list():
 @attr(method='get')
 @attr(operation='list all keys')
 @attr(assertion='marker before list')
+@attr('fails_on_leofs')
 def test_bucket_list_marker_before_list():
     key_names = ['bar', 'baz', 'foo', 'quxx']
     bucket = _create_keys(keys=key_names)
@@ -689,6 +701,7 @@ def _compare_dates(iso_datetime, http_datetime):
 @attr(method='head')
 @attr(operation='compare w/bucket list')
 @attr(assertion='return same metadata')
+@attr('fails_on_leofs')
 def test_bucket_list_return_data():
     key_names = ['bar', 'baz', 'foo']
     bucket = _create_keys(keys=key_names)
@@ -747,6 +760,7 @@ def test_bucket_list_object_time():
 @attr(method='get')
 @attr(operation='non-existant bucket')
 @attr(assertion='fails 404')
+@attr('fails_on_leofs')
 def test_bucket_notexist():
     # generate a (hopefully) unique, not-yet existent bucket name
     name = '{prefix}foo'.format(prefix=get_prefix())
@@ -762,6 +776,7 @@ def test_bucket_notexist():
 @attr(method='delete')
 @attr(operation='non-existant bucket')
 @attr(assertion='fails 404')
+@attr('fails_on_leofs')
 def test_bucket_delete_notexist():
     name = '{prefix}foo'.format(prefix=get_prefix())
     print 'Trying bucket {name!r}'.format(name=name)
@@ -774,6 +789,7 @@ def test_bucket_delete_notexist():
 @attr(method='delete')
 @attr(operation='non-empty bucket')
 @attr(assertion='fails 409')
+@attr('fails_on_leofs')
 def test_bucket_delete_nonempty():
     bucket = get_new_bucket()
 
@@ -791,6 +807,7 @@ def test_bucket_delete_nonempty():
 @attr(method='put')
 @attr(operation='non-existant bucket')
 @attr(assertion='fails 404')
+@attr('fails_on_leofs')
 def test_object_write_to_nonexist_bucket():
     name = '{prefix}foo'.format(prefix=get_prefix())
     print 'Trying bucket {name!r}'.format(name=name)
@@ -806,6 +823,7 @@ def test_object_write_to_nonexist_bucket():
 @attr(method='del')
 @attr(operation='deleted bucket')
 @attr(assertion='fails 404')
+@attr('fails_on_leofs')
 def test_bucket_create_delete():
     name = '{prefix}foo'.format(prefix=get_prefix())
     print 'Trying bucket {name!r}'.format(name=name)
@@ -887,6 +905,7 @@ def test_multi_object_delete():
 @attr(method='put')
 @attr(operation='write key')
 @attr(assertion='correct etag')
+@attr('fails_on_leofs')
 def test_object_write_check_etag():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -1151,6 +1170,7 @@ def _get_post_url(conn, bucket):
 @attr(method='post')
 @attr(operation='anonymous browser based upload via POST request')
 @attr(assertion='succeeds and returns written data')
+@attr('fails_on_leofs')
 def test_post_object_anonymous_request():
 	bucket = get_new_bucket()
 	url = _get_post_url(s3.main, bucket)
@@ -1245,6 +1265,7 @@ def test_post_object_authenticated_request_bad_access_key():
 @attr(method='post')
 @attr(operation='anonymous browser based upload via POST request')
 @attr(assertion='succeeds with status 201')
+@attr('fails_on_leofs')
 def test_post_object_set_success_code():
 	bucket = get_new_bucket()
 	bucket.set_acl('public-read-write')
@@ -1264,6 +1285,7 @@ def test_post_object_set_success_code():
 @attr(method='post')
 @attr(operation='anonymous browser based upload via POST request')
 @attr(assertion='succeeds with status 204')
+@attr('fails_on_leofs')
 def test_post_object_set_invalid_success_code():
 	bucket = get_new_bucket()
 	bucket.set_acl('public-read-write')
@@ -2405,6 +2427,7 @@ def test_object_raw_get():
 @attr(method='get')
 @attr(operation='deleted object and bucket')
 @attr(assertion='fails 404')
+@attr('fails_on_leofs')
 def test_object_raw_get_bucket_gone():
     (bucket, key) = _setup_request('public-read', 'public-read')
     key.delete()
@@ -2419,6 +2442,7 @@ def test_object_raw_get_bucket_gone():
 @attr(method='delete')
 @attr(operation='deleted object and bucket')
 @attr(assertion='fails 404')
+@attr('fails_on_leofs')
 def test_object_delete_key_bucket_gone():
     (bucket, key) = _setup_request()
     key.delete()
@@ -2433,6 +2457,7 @@ def test_object_delete_key_bucket_gone():
 @attr(method='get')
 @attr(operation='deleted object')
 @attr(assertion='fails 404')
+@attr('fails_on_leofs')
 def test_object_raw_get_object_gone():
     (bucket, key) = _setup_request('public-read', 'public-read')
     key.delete()
@@ -2463,6 +2488,7 @@ def _head_bucket(bucket, authenticated=True):
 @attr(method='head')
 @attr(operation='head bucket')
 @attr(assertion='succeeds')
+@attr('fails_on_leofs')
 def test_bucket_head():
     bucket = get_new_bucket()
 
@@ -2498,6 +2524,7 @@ def test_bucket_head_extended():
 @attr(method='get')
 @attr(operation='unauthenticated on private bucket')
 @attr(assertion='succeeds')
+@attr('fails_on_leofs')
 def test_object_raw_get_bucket_acl():
     (bucket, key) = _setup_request('private', 'public-read')
 
@@ -2510,6 +2537,7 @@ def test_object_raw_get_bucket_acl():
 @attr(method='get')
 @attr(operation='unauthenticated on private object')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 def test_object_raw_get_object_acl():
     (bucket, key) = _setup_request('public-read', 'private')
 
@@ -2564,6 +2592,7 @@ def test_object_raw_response_headers():
 @attr(method='ACLs')
 @attr(operation='authenticated on private bucket/public object')
 @attr(assertion='succeeds')
+@attr('fails_on_leofs')
 def test_object_raw_authenticated_bucket_acl():
     (bucket, key) = _setup_request('private', 'public-read')
 
@@ -2588,6 +2617,7 @@ def test_object_raw_authenticated_object_acl():
 @attr(method='get')
 @attr(operation='authenticated on deleted object and bucket')
 @attr(assertion='fails 404')
+@attr('fails_on_leofs')
 def test_object_raw_authenticated_bucket_gone():
     (bucket, key) = _setup_request('public-read', 'public-read')
     key.delete()
@@ -2602,6 +2632,7 @@ def test_object_raw_authenticated_bucket_gone():
 @attr(method='get')
 @attr(operation='authenticated on deleted object')
 @attr(assertion='fails 404')
+@attr('fails_on_leofs')
 def test_object_raw_authenticated_object_gone():
     (bucket, key) = _setup_request('public-read', 'public-read')
     key.delete()
@@ -2642,6 +2673,7 @@ def test_object_raw_put_write_access():
 @attr(method='put')
 @attr(operation='authenticated, no object acls')
 @attr(assertion='succeeds')
+@attr('fails_on_leofs')
 def test_object_raw_put_authenticated():
     bucket = get_new_bucket()
     key = bucket.new_key('foo')
@@ -2694,6 +2726,7 @@ def test_bucket_create_naming_bad_starts_nonalpha():
 @attr(method='put')
 @attr(operation='empty name')
 @attr(assertion='fails 405')
+@attr('fails_on_leofs')
 def test_bucket_create_naming_bad_short_empty():
     # bucket creates where name is empty look like PUTs to the parent
     # resource (with slash), hence their error response is different
@@ -2893,6 +2926,7 @@ def test_bucket_create_naming_dns_long():
 @attr(method='put')
 @attr(operation='create w/dash at end of name')
 @attr(assertion='fails with subdomain')
+@attr('fails_on_leofs')
 def test_bucket_create_naming_dns_dash_at_end():
     check_good_bucket_name('foo-')
 
@@ -2903,6 +2937,7 @@ def test_bucket_create_naming_dns_dash_at_end():
 @attr(method='put')
 @attr(operation='create w/.. in name')
 @attr(assertion='fails with subdomain')
+@attr('fails_on_leofs')
 def test_bucket_create_naming_dns_dot_dot():
     check_good_bucket_name('foo..bar')
 
@@ -2931,6 +2966,7 @@ def test_bucket_create_naming_dns_dash_dot():
 @attr(method='put')
 @attr(operation='re-create')
 @attr(assertion='idempotent success')
+@attr('fails_on_leofs')
 def test_bucket_create_exists():
     bucket = get_new_bucket(targets.main.default)
     # REST idempotency means this should be a nop
@@ -2940,6 +2976,7 @@ def test_bucket_create_exists():
 @attr(resource='bucket')
 @attr(method='get')
 @attr(operation='get location')
+@attr('fails_on_leofs')
 def test_bucket_get_location():
     bucket = get_new_bucket(targets.main.default)
     actual_location = bucket.get_location()
@@ -2951,6 +2988,7 @@ def test_bucket_get_location():
 @attr(method='put')
 @attr(operation='re-create by non-owner')
 @attr(assertion='fails 409')
+@attr('fails_on_leofs')
 def test_bucket_create_exists_nonowner():
     # Names are shared across a global namespace. As such, no two
     # users can create a bucket with that same name.
@@ -2965,6 +3003,7 @@ def test_bucket_create_exists_nonowner():
 @attr(method='del')
 @attr(operation='delete by non-owner')
 @attr(assertion='fails')
+@attr('fails_on_leofs')
 def test_bucket_delete_nonowner():
     bucket = get_new_bucket()
     check_access_denied(s3.alt.delete_bucket, bucket.name)
@@ -4358,6 +4397,7 @@ def test_list_buckets_anonymous():
 @attr(method='get')
 @attr(operation='list all buckets (bad auth)')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 def test_list_buckets_invalid_auth():
     conn = _create_connection_bad_auth()
     e = assert_raises(boto.exception.S3ResponseError, conn.get_all_buckets)
@@ -4369,6 +4409,7 @@ def test_list_buckets_invalid_auth():
 @attr(method='get')
 @attr(operation='list all buckets (bad auth)')
 @attr(assertion='fails 403')
+@attr('fails_on_leofs')
 def test_list_buckets_bad_auth():
     conn = _create_connection_bad_auth(aws_access_key_id=s3.main.aws_access_key_id)
     e = assert_raises(boto.exception.S3ResponseError, conn.get_all_buckets)
@@ -4420,6 +4461,7 @@ def test_bucket_create_naming_good_contains_hyphen():
 @attr(method='put')
 @attr(operation='create bucket with objects and recreate it')
 @attr(assertion='bucket recreation not overriding index')
+@attr('fails_on_leofs')
 def test_bucket_recreate_not_overriding():
     key_names = ['mykey1', 'mykey2']
     bucket = _create_keys(keys=key_names)
@@ -4453,6 +4495,7 @@ def test_bucket_create_special_key_names():
 @attr(method='get')
 @attr(operation='create and list objects with underscore as prefix, list using prefix')
 @attr(assertion='listing works correctly')
+@attr('fails_on_leofs')
 def test_bucket_list_special_prefix():
     key_names = ['_bla/1', '_bla/2', '_bla/3', '_bla/4', 'abcd']
     bucket = _create_keys(keys=key_names)
@@ -4492,6 +4535,7 @@ def test_object_copy_same_bucket():
 @attr(method='put')
 @attr(operation='copy object to itself')
 @attr(assertion='fails')
+@attr('fails_on_leofs')
 def test_object_copy_to_itself():
     bucket = get_new_bucket()
     key = bucket.new_key('foo123bar')
@@ -4564,6 +4608,7 @@ def test_object_copy_not_owned_object_bucket():
 @attr(method='put')
 @attr(operation='copy object and change acl')
 @attr(assertion='works')
+@attr('fails_on_leofs')
 def test_object_copy_canned_acl():
     bucket = get_new_bucket()
     key = bucket.new_key('foo123bar')
@@ -4671,6 +4716,7 @@ def _multipart_upload(bucket, s3_key_name, size, part_size=5*1024*1024, do_list=
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='check multipart upload without parts')
+@attr('fails_on_leofs')
 def test_multipart_upload_empty():
     bucket = get_new_bucket()
     key = "mymultipart"
@@ -4682,6 +4728,7 @@ def test_multipart_upload_empty():
 @attr(resource='object')
 @attr(method='put')
 @attr(operation='check multipart uploads with single small part')
+@attr('fails_on_leofs')
 def test_multipart_upload_small():
     bucket = get_new_bucket()
     key = "mymultipart"
@@ -4706,6 +4753,7 @@ def _check_content_using_range(k, data, step):
 @attr(method='put')
 @attr(operation='complete multi-part upload')
 @attr(assertion='successful')
+@attr('fails_on_leofs')
 def test_multipart_upload():
     bucket = get_new_bucket()
     key="mymultipart"
@@ -4754,6 +4802,7 @@ def _check_upload_multipart_resend(bucket, key, objlen, resend_parts):
 @attr(method='put')
 @attr(operation='complete multi-part upload')
 @attr(assertion='successful')
+@attr('fails_on_leofs')
 def test_multipart_upload_resend_part():
     bucket = get_new_bucket()
     key="mymultipart"
@@ -4766,6 +4815,7 @@ def test_multipart_upload_resend_part():
     _check_upload_multipart_resend(bucket, key, objlen, [0,1,2,3,4,5])
 
 @attr(assertion='successful')
+@attr('fails_on_leofs')
 def test_multipart_upload_multiple_sizes():
     bucket = get_new_bucket()
     key="mymultipart"
@@ -4791,6 +4841,7 @@ def test_multipart_upload_multiple_sizes():
 @attr(method='put')
 @attr(operation='check failure on multiple multi-part upload with size too small')
 @attr(assertion='fails 400')
+@attr('fails_on_leofs')
 def test_multipart_upload_size_too_small():
     bucket = get_new_bucket()
     key="mymultipart"
@@ -4827,6 +4878,7 @@ def _do_test_multipart_upload_contents(bucket, key_name, num_parts):
 @attr(method='put')
 @attr(operation='check contents of multi-part upload')
 @attr(assertion='successful')
+@attr('fails_on_leofs')
 def test_multipart_upload_contents():
     _do_test_multipart_upload_contents(get_new_bucket(), 'mymultipart', 3)
 
@@ -4835,6 +4887,7 @@ def test_multipart_upload_contents():
 @attr(method='put')
 @attr(operation=' multi-part upload overwrites existing key')
 @attr(assertion='successful')
+@attr('fails_on_leofs')
 def test_multipart_upload_overwrite_existing_object():
     bucket = get_new_bucket()
     key_name="mymultipart"
@@ -4856,6 +4909,7 @@ def test_multipart_upload_overwrite_existing_object():
 @attr(method='put')
 @attr(operation='abort multi-part upload')
 @attr(assertion='successful')
+@attr('fails_on_leofs')
 def test_abort_multipart_upload():
     bucket = get_new_bucket()
     key="mymultipart"
@@ -4867,6 +4921,7 @@ def test_abort_multipart_upload():
     eq(result.get('x-rgw-object-count', 0), 0)
     eq(result.get('x-rgw-bytes-used', 0), 0)
 
+@attr('fails_on_leofs')
 def test_abort_multipart_upload_not_found():
     bucket = get_new_bucket()
     key="mymultipart"
@@ -4879,6 +4934,7 @@ def test_abort_multipart_upload_not_found():
 @attr(method='put')
 @attr(operation='concurrent multi-part uploads')
 @attr(assertion='successful')
+@attr('fails_on_leofs')
 def test_list_multipart_upload():
     bucket = get_new_bucket()
     key="mymultipart"
@@ -5287,6 +5343,7 @@ def test_atomic_write_4mb():
 @attr(method='put')
 @attr(operation='write atomicity')
 @attr(assertion='8MB successful')
+@attr('fails_on_leofs')
 def test_atomic_write_8mb():
     _test_atomic_write(1024*1024*8)
 
@@ -5332,6 +5389,7 @@ def test_atomic_dual_write_4mb():
 @attr(method='put')
 @attr(operation='write one or the other')
 @attr(assertion='8MB successful')
+@attr('fails_on_leofs')
 def test_atomic_dual_write_8mb():
     _test_atomic_dual_write(1024*1024*8)
 
