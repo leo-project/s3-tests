@@ -534,7 +534,6 @@ def test_bucket_list_maxkeys_one():
 @attr(method='get')
 @attr(operation='list all keys')
 @attr(assertion='pagination w/max_keys=0')
-@attr('fails_on_leofs')
 def test_bucket_list_maxkeys_zero():
     bucket = _create_keys(keys=['bar', 'baz', 'foo', 'quxx'])
 
