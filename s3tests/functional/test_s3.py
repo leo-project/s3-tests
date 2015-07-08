@@ -4534,7 +4534,6 @@ def test_object_copy_same_bucket():
 @attr(method='put')
 @attr(operation='copy object to itself')
 @attr(assertion='fails')
-@attr('fails_on_leofs')
 def test_object_copy_to_itself():
     bucket = get_new_bucket()
     key = bucket.new_key('foo123bar')
