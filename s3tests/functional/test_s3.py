@@ -4408,7 +4408,6 @@ def test_list_buckets_invalid_auth():
 @attr(method='get')
 @attr(operation='list all buckets (bad auth)')
 @attr(assertion='fails 403')
-@attr('fails_on_leofs')
 def test_list_buckets_bad_auth():
     conn = _create_connection_bad_auth(aws_access_key_id=s3.main.aws_access_key_id)
     e = assert_raises(boto.exception.S3ResponseError, conn.get_all_buckets)
