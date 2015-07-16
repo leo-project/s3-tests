@@ -139,6 +139,7 @@ def _get_keys_prefixes(li):
 @attr(assertion='pagination w/max_keys=2, no marker')
 def test_bucket_list_many():
     bucket = _create_keys(keys=['foo', 'bar', 'baz'])
+    time.sleep(1)
 
     # bucket.list() is high-level and will not let us set max-keys,
     # using it would require using >1000 keys to test, and that would
@@ -163,6 +164,7 @@ def test_bucket_list_many():
 @attr(assertion='prefixes in multi-component object names')
 def test_bucket_list_delimiter_basic():
     bucket = _create_keys(keys=['foo/bar', 'foo/baz/xyzzy', 'quux/thud', 'asdf'])
+    time.sleep(1)
 
     # listings should treat / delimiter in a directory-like fashion
     li = bucket.list(delimiter='/')
@@ -265,6 +267,7 @@ def test_bucket_list_delimiter_unreadable():
     key_names = ['bar', 'baz', 'cab', 'foo']
     bucket = _create_keys(keys=key_names)
 
+    time.sleep(1)
     li = bucket.list(delimiter='\x0a')
     eq(li.delimiter, '\x0a')
 
@@ -282,6 +285,7 @@ def test_bucket_list_delimiter_empty():
     key_names = ['bar', 'baz', 'cab', 'foo']
     bucket = _create_keys(keys=key_names)
 
+    time.sleep(1)
     li = bucket.list(delimiter='')
     eq(li.delimiter, '')
 
@@ -300,6 +304,7 @@ def test_bucket_list_delimiter_none():
     key_names = ['bar', 'baz', 'cab', 'foo']
     bucket = _create_keys(keys=key_names)
 
+    time.sleep(1)
     li = bucket.list()
     eq(li.delimiter, '')
 
@@ -317,6 +322,7 @@ def test_bucket_list_delimiter_not_exist():
     key_names = ['bar', 'baz', 'cab', 'foo']
     bucket = _create_keys(keys=key_names)
 
+    time.sleep(1)
     li = bucket.list(delimiter='/')
     eq(li.delimiter, '/')
 
@@ -333,6 +339,7 @@ def test_bucket_list_delimiter_not_exist():
 def test_bucket_list_prefix_basic():
     bucket = _create_keys(keys=['foo/bar', 'foo/baz', 'quux'])
 
+    time.sleep(1)
     li = bucket.list(prefix='foo/')
     eq(li.prefix, 'foo/')
 
@@ -434,6 +441,7 @@ def test_bucket_list_prefix_unreadable():
 def test_bucket_list_prefix_delimiter_basic():
     bucket = _create_keys(keys=['foo/bar', 'foo/baz/xyzzy', 'quux/thud', 'asdf'])
 
+    time.sleep(1)
     li = bucket.list(prefix='foo/', delimiter='/')
     eq(li.prefix, 'foo/')
     eq(li.delimiter, '/')
@@ -518,6 +526,7 @@ def test_bucket_list_maxkeys_one():
     key_names = ['bar', 'baz', 'foo', 'quxx']
     bucket = _create_keys(keys=key_names)
 
+    time.sleep(1)
     li = bucket.get_all_keys(max_keys=1)
     eq(len(li), 1)
     eq(li.is_truncated, True)
@@ -550,6 +559,7 @@ def test_bucket_list_maxkeys_none():
     key_names = ['bar', 'baz', 'foo', 'quxx']
     bucket = _create_keys(keys=key_names)
 
+    time.sleep(1)
     li = bucket.get_all_keys()
     eq(li.is_truncated, False)
     names = [e.name for e in li]
@@ -607,6 +617,7 @@ def test_bucket_list_marker_empty():
     key_names = ['bar', 'baz', 'foo', 'quxx']
     bucket = _create_keys(keys=key_names)
 
+    time.sleep(1)
     li = bucket.get_all_keys(marker='')
     eq(li.marker, '')
     eq(li.is_truncated, False)
@@ -741,6 +752,7 @@ def test_bucket_list_return_data():
 @attr(assertion='http and ISO-6801 times agree')
 def test_bucket_list_object_time():
     bucket = _create_keys(keys=['foo'])
+    time.sleep(1)
 
     # Wed, 10 Aug 2011 21:58:25 GMT'
     key = bucket.get_key('foo')
@@ -887,9 +899,11 @@ def test_multi_object_delete():
 	key0.set_contents_from_string('foo')
 	key1 = bucket.new_key('key1')
 	key1.set_contents_from_string('bar')
+        time.sleep(1)
 	stored_keys = bucket.get_all_keys()
 	eq(len(stored_keys), 2)
 	result = bucket.delete_keys(stored_keys)
+        time.sleep(1)
         eq(len(result.deleted), 2)
         eq(len(result.errors), 0)
         eq(len(bucket.get_all_keys()), 0)
@@ -4485,7 +4499,7 @@ def test_bucket_create_special_key_names():
     bucket = _create_keys(keys=key_names)
 
     li = bucket.list()
-
+    time.sleep(1)
     names = [e.name for e in list(li)]
     eq(names, key_names)
 
